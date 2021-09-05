@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:preference_list/preference_list.dart';
@@ -130,11 +132,15 @@ class _HomePageState extends State<HomePage> with TrayListener, WindowListener {
 
   @override
   void onWindowMinimize() async {
-    await trayManager.setIcon('images/tray_icon.png');
-    List<MenuItem> menuItems = [
-      MenuItem(title: 'Exit'),
-    ];
-    await trayManager.setContextMenu(menuItems);
+    await trayManager.setIcon(
+      Platform.isWindows ? 'images/tray_icon.ico' : 'images/tray_icon.png',
+    );
+    if (Platform.isMacOS) {
+      List<MenuItem> menuItems = [
+        MenuItem(title: 'Exit'),
+      ];
+      await trayManager.setContextMenu(menuItems);
+    }
   }
 
   @override

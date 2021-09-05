@@ -6,7 +6,7 @@ An example of a window minimized to the tray.
 
 | Linux | macOS | Windows |
 | :---: | :---: | :-----: |
-|  ➖   |  ✔️   |   ➖    |
+|  ➖   |  ✔️   |   ✔️    |
 
 ## Discussion
 
