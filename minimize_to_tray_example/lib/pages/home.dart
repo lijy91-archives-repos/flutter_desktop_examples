@@ -28,9 +28,27 @@ class _HomePageState extends State<HomePage> with TrayListener, WindowListener {
 
   @override
   void dispose() {
+    _trayUnInit();
     trayManager.removeListener(this);
     windowManager.removeListener(this);
     super.dispose();
+  }
+
+  void _trayInit() async {
+    await trayManager.setIcon(
+      Platform.isWindows ? 'images/tray_icon.ico' : 'images/tray_icon.png',
+    );
+    List<MenuItem> menuItems = [
+      MenuItem(
+        identifier: 'exit-app',
+        title: 'Exit',
+      ),
+    ];
+    await trayManager.setContextMenu(menuItems);
+  }
+
+  void _trayUnInit() async {
+    await trayManager.destroy();
   }
 
   void _handleClickMinimize() async {
@@ -102,7 +120,7 @@ class _HomePageState extends State<HomePage> with TrayListener, WindowListener {
   }
 
   @override
-  void onTrayIconMouseUp() async {
+  void onTrayIconMouseDown() async {
     if (_showWindowBelowTrayIcon) {
       Size windowSize = await windowManager.getSize();
       Rect trayIconBounds = await trayManager.getBounds();
@@ -121,32 +139,30 @@ class _HomePageState extends State<HomePage> with TrayListener, WindowListener {
   }
 
   @override
-  void onTrayIconRightMouseUp() {
+  void onTrayIconRightMouseDown() {
     trayManager.popUpContextMenu();
   }
 
   @override
-  void onTrayMenuItemClick(MenuItem menuItem) {
+  void onTrayMenuItemClick(MenuItem menuItem) async {
     print(menuItem.toJson());
+
+    switch (menuItem.identifier) {
+      case "exit-app":
+        windowManager.terminate();
+        break;
+    }
   }
 
   @override
   void onWindowMinimize() async {
-    await trayManager.setIcon(
-      Platform.isWindows ? 'images/tray_icon.ico' : 'images/tray_icon.png',
-    );
-    if (Platform.isMacOS) {
-      List<MenuItem> menuItems = [
-        MenuItem(title: 'Exit'),
-      ];
-      await trayManager.setContextMenu(menuItems);
-    }
+    _trayInit();
   }
 
   @override
   void onWindowRestore() async {
     if (_removeIconAfterRestored) {
-      await trayManager.destroy();
+      _trayUnInit();
     }
   }
 }

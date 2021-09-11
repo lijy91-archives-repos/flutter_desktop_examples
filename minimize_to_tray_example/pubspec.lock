@@ -173,10 +173,10 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "29810cc71f8205d87948ae5fb7b0c5b910011bae"
+      resolved-ref: "57caa38afb512cfa6864789f3e241b01bc50fe98"
       url: "https://github.com/leanflutter/tray_manager.git"
     source: git
-    version: "0.0.1"
+    version: "0.0.2"
   typed_data:
     dependency: transitive
     description:
@@ -203,7 +203,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: ad823f4a5aa4f62b6e525953f6459175fd62d341
+      resolved-ref: e061f2b09291ff6018d1d157226a877c66b0dc37
       url: "https://github.com/leanflutter/window_manager.git"
     source: git
     version: "0.0.3"
